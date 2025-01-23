@@ -1,0 +1,23 @@
+{
+  "name": "sistema-gestao",
+  "version": "1.0.0",
+  "description": "Aplicação para controle de agendamentos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/VictorPacelli/sistemagestao.git"
+  },
+  "author": "Victor Pacelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorPacelli/sistemagestao/issues"
+  },
+  "homepage": "https://github.com/VictorPacelli/sistemagestao#readme",
+  "devDependencies": {
+    "electron": "^34.0.1"
+  }
+}
