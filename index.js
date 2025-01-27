@@ -7,6 +7,7 @@ const newWindow = () => {
     window.loadFile('html/index.html')
     window.once('ready-to-show', () => {
         window.maximize()
+        window.webContents.openDevTools()
         window.show()
     })
 

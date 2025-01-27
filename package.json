@@ -19,5 +19,8 @@
   "homepage": "https://github.com/VictorPacelli/sistemagestao#readme",
   "devDependencies": {
     "electron": "^34.0.1"
+  },
+  "dependencies": {
+    "fullcalendar": "^6.1.15"
   }
 }
