@@ -21,6 +21,8 @@
     "electron": "^34.0.1"
   },
   "dependencies": {
-    "fullcalendar": "^6.1.15"
+    "dotenv": "^16.4.7",
+    "fullcalendar": "^6.1.15",
+    "mongoose": "^8.9.5"
   }
 }

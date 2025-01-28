@@ -29,11 +29,21 @@
 
 <body>
   <div class="calendar-content">
-    <div></div>
+    <div><button id="criarReserva">Criar Reserva</button></div>
     <div id='calendar' class="max-content"></div>
     <div></div>
   </div>
-
+<script>
+  document.getElementById('criarReserva').addEventListener('click', async () => {
+  try {
+    await window.api.criarReserva();
+    alert('Reserva criada com sucesso!');
+  } catch (err) {
+    console.error('Erro ao criar reserva:', err);
+    alert('Erro ao criar reserva!');
+  }
+})
+</script>
 
 </body>
 
