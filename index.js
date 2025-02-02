@@ -8,8 +8,10 @@ mongoose.connect(process.env.MONGOOSE_URL)
     .then(() => { console.log('conectado ao Mongo') })
     .catch((err) => { console.error(err) })
 
+var MainWindow
+
 const newWindow = () => {
-    const window = new BrowserWindow({
+     MainWindow = new BrowserWindow({
         show: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
@@ -17,16 +19,22 @@ const newWindow = () => {
             contextIsolation: true,
         }
     })
-    window.loadFile('html/index.html')
-    window.once('ready-to-show', () => {
-        window.maximize()
-        //window.webContents.openDevTools()
-        window.show()
+    MainWindow.loadFile('html/index.html')
+    MainWindow.once('ready-to-show', () => {
+        MainWindow.maximize()
+        //MainWindow.webContents.openDevTools()
+        MainWindow.show()
     })
 
 }
-ipcMain.handle('criar-reserva', async () => {
-    await criarReserva()
+ipcMain.handle('criar-reserva', async (event,Agenda) => {
+    let reserva = await criarReserva(Agenda)
+    event.sender.send('status-criacao-reserva', reserva)
+})
+
+ipcMain.on('abrir-reserva',()=>{
+    console.log('oi')
+    MainWindow.loadFile('html/reserva.html')
 })
 
 app.whenReady().then(() => {

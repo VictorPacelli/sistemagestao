@@ -11,7 +11,7 @@
       var calendarEl = document.getElementById('calendar');
       var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'pt-br', 
+        locale: 'pt-br',
         buttonText: {
           today: 'Hoje',
           month: 'Mês',
@@ -29,21 +29,19 @@
 
 <body>
   <div class="calendar-content">
-    <div><button id="criarReserva">Criar Reserva</button></div>
+    <div><button id="criarReserva">Criar Agenda</button></div>
     <div id='calendar' class="max-content"></div>
     <div></div>
   </div>
-<script>
-  document.getElementById('criarReserva').addEventListener('click', async () => {
-  try {
-    await window.api.criarReserva();
-    alert('Reserva criada com sucesso!');
-  } catch (err) {
-    console.error('Erro ao criar reserva:', err);
-    alert('Erro ao criar reserva!');
-  }
-})
-</script>
+  <script>
+    const { ipcRenderer } = window.api;
+    var criarReserva = document.getElementById('criarReserva')
+    criarReserva.addEventListener('click', () => {
+      console.log('click')
+      api.abrirReserva()
+    })
+
+  </script>
 
 </body>
 
