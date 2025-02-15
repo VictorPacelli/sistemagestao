@@ -1,13 +1,11 @@
+
 const { ipcRenderer } = window.api
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        timeZone: 'UTC',
         initialView: 'timeGridDay',
         slotLabelInterval: '01:00',
-        slotMinTime: '07:00:00',
-        slotMaxTime: '18:00:00',
         contentHeight: 'auto',
         locale: 'pt-br',
         allDaySlot: false,
@@ -51,8 +49,23 @@ document.addEventListener('DOMContentLoaded', function () {
         window.api.criarReserva(Agenda)
     })
 
-    window.api.statusReserva((event,message)=>{
+    window.api.statusReserva((event, message) => {
         console.log(message)
+        if (message.status == 200){
+            calendar.addEvent({
+                id: message.id,
+                title: `${form.Titulo.value} ${form.Observacoes.value}`,
+                start: form.HoraInicio.value,
+                end: form.HoraFim.value
+            })
+            form.reset()
+        }
+        window.alert(message.message)
+    })
+
+    window.api.consultarReservas("06/02/2025")
+    window.api.reservasCadastradas((event, reservas) =>{
+        console.log(reservas)
     })
 
 })

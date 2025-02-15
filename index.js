@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const mongoose = require('mongoose')
 require('dotenv').config()
-const { criarReserva } = require('./api/mongo.js');
+const { criarReserva, consultarReservas } = require('./api/mongo.js');
 
 mongoose.connect(process.env.MONGOOSE_URL)
     .then(() => { console.log('conectado ao Mongo') })
@@ -32,8 +32,12 @@ ipcMain.handle('criar-reserva', async (event,Agenda) => {
     event.sender.send('status-criacao-reserva', reserva)
 })
 
+ipcMain.handle('consultar-reserva', async (event,data) =>{
+    let reservas = await consultarReservas(data)
+    event.sender.send('reservas-cadastradas', reservas)
+})
+
 ipcMain.on('abrir-reserva',()=>{
-    console.log('oi')
     MainWindow.loadFile('html/reserva.html')
 })
 

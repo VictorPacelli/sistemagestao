@@ -16,12 +16,14 @@ const agendaSchema = new schema(
         }]
 
     },
-    { timestamps: true } //adiciona hora de create e update
+    { timestamps: true }, //adiciona hora de create e update
+    { _id: true } 
 )
 
 const Agenda = mongoose.model('Agenda', agendaSchema, 'Agenda')
 
 async function criarReserva(dadosReserva) {
+    var status
     let possuiAgendamento = await Agenda.findOne({
         Dia: dadosReserva.Dia,
         Horario: {
@@ -33,7 +35,8 @@ async function criarReserva(dadosReserva) {
     })
 
     if (possuiAgendamento) {
-        return 'Já existe um agendamento dentro do intervalo informado.'
+        status = {status: 409, id: null, message:'Já existe um agendamento dentro do intervalo informado.'}
+        return status
     }
 
     try {
@@ -55,15 +58,23 @@ async function criarReserva(dadosReserva) {
             },
             { upsert: true }
         )
-
-        console.log('Reserva criada com sucesso.')
-        return 'Reserva criada com sucesso.'
+        status = {status: 200, id: resultado.upsertedId, message: 'Agendamento realizado com sucesso'}
+        return status
     } catch (err) {
-        console.error('Erro ao criar a reserva:', err)
-        return 'Erro ao criar a reserva.'
+        status = {status: 500, id: null, message: err}
+        return status
     }
 }
 
+async function consultarReservas(data){
+    try{
+      let agendamentos =  await Agenda.findOne({Dia : data})
+      return agendamentos ? agendamentos.toJSON() : null; 
 
+    } catch(err){
+        console.error(err)
+        return null
+    }
+}
 
-module.exports = { criarReserva }
+module.exports = { criarReserva, consultarReservas }
